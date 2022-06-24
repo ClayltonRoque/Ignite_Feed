@@ -2,8 +2,19 @@ import styles from './Comment.module.css'
 import img from '../assets/kawaii2.gif'
 import { ThumbsUp, Trash } from 'phosphor-react'
 import { Avatar } from './Avatar'
+import { useState } from 'react'
 
-export function Comment() {
+export function Comment({content, onDeleteComment}) {
+    const [likeComment, setLikeComment] = useState(0)
+
+    function handleDeleteComment() {
+        onDeleteComment(content)
+    }
+    function handleLikeComment() {
+        setLikeComment((state) => {
+            return state + 1
+        })
+    }
     return (
         <div className={styles.comment}>
             <Avatar hasBorder={false} src="https://i.gifer.com/97jj.gif" />
@@ -12,19 +23,19 @@ export function Comment() {
                 <header>
                     <div className={styles.authorAndTime}>
                         <strong>Claylton Roque</strong>
-                        <time title="18 de junho ás 16:49" dataTime="2022-06-18 16:48">Cerca de uma 1h atrás</time>
+                        <time title="18 de junho ás 16:49" datatime="2022-06-18 16:48">Cerca de uma 1h atrás</time>
                     </div>
-                    <button title='Deletar comentário'>
+                    <button onClick={handleDeleteComment} title='Deletar comentário'>
                         <Trash size={24} />
                     </button>
                 </header>
 
-                <p>Kaguya lover</p>
+                <p>{content}</p>
                 </div>
                 <footer>
-                    <button>
+                    <button onClick={handleLikeComment}>
                         <ThumbsUp />
-                        Aplaudir <span>20</span>
+                        Aplaudir <span>{likeComment}</span>
                     </button>
                 </footer>
             </div>
